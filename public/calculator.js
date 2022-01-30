@@ -21,7 +21,7 @@ var rows = 4;
 // percent function
 function percent(a) {
     var percent = 0;
-    if (Number(gd[a].value)>0) {
+    if (Number(gd[a].value)>0 && Number(gn[a].value)>=0) {
         percent = Number(gn[a].value)/Number(gd[a].value);
         percent = percent * 100;
         p[a].innerHTML = percent.toFixed(2);
@@ -95,8 +95,12 @@ function addactivity() {
     wt.innerHTML = '<input class="weight" type="number" name="weight" value="">';
     grd.innerHTML = '<input class="num" type="number" name="num" value=""> / <input class="denom" type="number" name="denom" value="">';
     prct.innerHTML = '<div class="percent"></div>';
-    gn[rows-1].addEventListener('change', (evt) => percent(rows-1));
-    gd[rows-1].addEventListener('change', (evt) => percent(rows-1));
+    for (let i = 0; i <rows; i++) {
+        (function() {
+            gn[i].addEventListener('change', (evt) => percent(i));
+            gd[i].addEventListener('change', (evt) => percent(i));
+        }());
+    }   
 }
 
 // button event listners
@@ -105,13 +109,18 @@ document.getElementById('add').addEventListener("click", addactivity);
 document.getElementById('weighted').addEventListener("click", weighted);
 
 // percent event listeners
-gn[0].addEventListener('change', (evt) => percent(0));
-gd[0].addEventListener('change', (evt) => percent(0));
-gn[1].addEventListener('change', (evt) => percent(1));
-gd[1].addEventListener('change', (evt) => percent(1));
-gn[2].addEventListener('change', (evt) => percent(2));
-gd[2].addEventListener('change', (evt) => percent(2));
-gn[3].addEventListener('change', (evt) => percent(3));
-gd[3].addEventListener('change', (evt) => percent(3));
+for (let i = 0; i <rows; i++) {
+    (function() {
+        gn[i].addEventListener('change', (evt) => percent(i));
+        gd[i].addEventListener('change', (evt) => percent(i));
+    }());
+}
+
+// gn[1].addEventListener('change', (evt) => percent(1));
+// gd[1].addEventListener('change', (evt) => percent(1));
+// gn[2].addEventListener('change', (evt) => percent(2));
+// gd[2].addEventListener('change', (evt) => percent(2));
+// gn[3].addEventListener('change', (evt) => percent(3));
+// gd[3].addEventListener('change', (evt) => percent(3));
 
 
